@@ -2,11 +2,23 @@ import { Request, Response } from "express";
 import Todo, { ITodo } from "../Models/task";
 
 export const getTodos = async (req: Request, res: Response): Promise<void> => {
+  const limit: number = parseInt(req.query.limit as string) || 10;
+  const page: number = parseInt(req.query.page as string) || 1;
+
+  const skip: number = (page - 1) * limit;
+
   try {
-    const todos: ITodo[] = await Todo.find();
-    res.status(200).json({ todos });
+    const count: number = await Todo.countDocuments();
+    const todos = await Todo.find().skip(skip).limit(limit);
+
+    res.status(200).json({
+      todos,
+      totalPages: Math.ceil(count / limit),
+      currentPage: page,
+      totalItems: count,
+    });
   } catch (error) {
-    throw error;
+    res.status(500).json({ message: error.message });
   }
 };
 
