@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Todo, { ITodo } from "../Models/task";
 
+//API for getting all tasks
 export const getTodos = async (req: Request, res: Response): Promise<void> => {
   const limit: number = parseInt(req.query.limit as string) || 10;
   const page: number = parseInt(req.query.page as string) || 1;
@@ -22,6 +23,7 @@ export const getTodos = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+//API for Adding New Task
 export const addTodo = async (req: Request, res: Response): Promise<void> => {
   try {
     const body = req.body as Pick<ITodo, "title" | "description" | "status">;
@@ -45,6 +47,7 @@ export const addTodo = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+//API for updating the tasks
 export const updateTodo = async (
   req: Request,
   res: Response
@@ -73,6 +76,7 @@ export const updateTodo = async (
   }
 };
 
+//API for deleting tasks
 export const deleteTodo = async (
   req: Request,
   res: Response

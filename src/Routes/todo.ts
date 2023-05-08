@@ -8,6 +8,7 @@ import {
 
 const router = Router();
 
+//All Routes Given
 router.get("/todos", getTodos);
 router.post("/add-todo", addTodo);
 router.put("/edit-todo/:id", updateTodo);
